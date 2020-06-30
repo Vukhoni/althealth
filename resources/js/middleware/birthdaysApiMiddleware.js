@@ -11,11 +11,11 @@ const birthdaysApiMiddleware = ({getState, dispatch }) => next => action =>{
             dispatch(setLoading({...loading,birthdays: true}))
             axios.get(url).then((res)=>{
                 next(loadbirthdays(res.data.data));
-                dispatch(setLoading({...loading,birthdays: false}));
+                dispatch(setLoading({birthdays: false}));
 
             }).catch(
                 ()=>{
-                    dispatch(setLoading({...loading,birthdays: false}));
+                    dispatch(setLoading({birthdays: false}));
                 }
             )
             break;

@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faFrown} from '@fortawesome/free-solid-svg-icons/faFrown';
 import ScaleLoader from "react-spinners/ScaleLoader";
-import {loadbirthdays} from "../birthdays";
+import {loadbirthdays} from "../../birthdays";
 
 const BirthDays = ({birthdays, ui,[loadbirthdays.type]: load}) =>{
 
