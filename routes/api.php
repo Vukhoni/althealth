@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('birthdays','API\BirthDayController');
 Route::apiResource('unpaidinvoices','API\UnpaidInvoiceController');
+Route::apiResource('lowstocks','API\LowStockController');

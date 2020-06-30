@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 import Layout from './components/containers/Layout';
 import Home from './components/containers/Home';
 import configureStore from './store';
@@ -7,10 +8,19 @@ import {Provider} from 'react-redux';
 
 const App = () =>{
     return(
-        <Layout>
-            <Home />
+        <BrowserRouter>
+            <Layout>
+                <Switch>
+                    <Route exact path='/'>
+                        <Home />
+                    </Route>
+                </Switch>
 
-        </Layout>
+
+            </Layout>
+
+        </BrowserRouter>
+
     )
 }
 

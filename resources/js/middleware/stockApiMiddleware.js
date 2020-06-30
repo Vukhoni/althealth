@@ -1,28 +1,30 @@
-import {loadunpaid} from "../invoices";
+import {loadLowStock} from "../stock";
 import {setLoading} from "../ui";
 import axios from 'axios';
 
-const url = 'http://localhost:8000/api/unpaidinvoices';
-const invoicingApiMiddleware = ({getState, dispatch }) => next => action =>{
+const url = 'http://localhost:8000/api/lowstocks';
+const stockApiMiddleware = ({getState, dispatch }) => next => action =>{
     const loading = getState().ui.loading;
     switch (action.type) {
 
-        case loadunpaid.type:
-            dispatch(setLoading({...loading,unpaidInvoices: true}))
+        case loadLowStock.type:
+            console.log(action.payload);
+            dispatch(setLoading({...loading,lowStock: true}))
             axios.get(`${url}?page=${action.payload.page}`).then((res)=>{
+
                 const {data,meta} =res.data;
-                next(loadunpaid({
+                next(loadLowStock({
                     data: data,
                     page: meta.current_page,
                     first: meta.from,
                     last: meta.last_page,
                     total: meta.total,
                 }));
-                dispatch(setLoading({unpaidInvoices: false}));
+                dispatch(setLoading({lowStock: false}));
 
             }).catch(
                 ()=>{
-                    dispatch(setLoading({unpaidInvoices: false}));
+                    dispatch(setLoading({lowStock: false}));
                 }
             )
             break;
@@ -31,4 +33,4 @@ const invoicingApiMiddleware = ({getState, dispatch }) => next => action =>{
     }
 };
 
-export default invoicingApiMiddleware;
+export default stockApiMiddleware;

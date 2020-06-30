@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSmile} from "@fortawesome/free-solid-svg-icons/faSmile";
-import Paginator from './paginator';
+import Paginator from './Paginator';
 import ScaleLoader from "react-spinners/ScaleLoader";
 
 const render = (invoices) =>{
@@ -73,11 +73,13 @@ const InvoiceTable = ({invoices, ui, load}) => {
             <tfoot>
                 <tr>
                     <td colSpan='4'>
-                        <Paginator page={invoices.page} first={invoices.first} last={invoices.last} load ={(page)=>{
-                            load({
-                                ...invoices, page
-                            })
-                        }}/>
+                        <div className='align-content-center'>
+                            <Paginator page={invoices.page} first={invoices.first} last={invoices.last} load ={(next)=>{
+                                load({
+                                    ...invoices, page : next
+                                })
+                            }}/>
+                        </div>
                     </td>
                 </tr>
             </tfoot>

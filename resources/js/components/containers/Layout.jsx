@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react';
-
+import {Link} from 'react-router-dom';
 const Layout = (props) => {
     return (
         <Fragment>
             <header className='container'>
                 <nav className="navbar navbar-expand-md bg-secondary">
-                    <a className="navbar-brand" href="#">AltHealth</a>
+                    <Link className="navbar-brand" to={'/'}>AltHealth</Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -14,10 +14,10 @@ const Layout = (props) => {
                     <div className="collapse navbar-collapse" id="navbarsExampleDefault">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                                <Link className="nav-link" to={'/'}>Home <span className="sr-only">(current)</span></Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
+                                <Link className="nav-link" href="/clients10">Top 10 Clients</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
