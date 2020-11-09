@@ -38,9 +38,9 @@ const render = (birthDays) => {
     else
     {
         let result = birthDays.map((birthday) =>{
-            return (<li className="list-group-item" key={birthday.ID}>{birthday.Name} <span className="badge badge-warning"> {birthday.Age}</span></li>);
+            return (<li className="list-group-item" key={birthday.ID}>{birthday.Name} </li>);
         });
-        console.log(result);
+
         return (
             <ul className="list-group">
                 {result}

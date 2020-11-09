@@ -8,7 +8,7 @@ const stockApiMiddleware = ({getState, dispatch }) => next => action =>{
     switch (action.type) {
 
         case loadLowStock.type:
-            console.log(action.payload);
+
             dispatch(setLoading({...loading,lowStock: true}))
             axios.get(`${url}?page=${action.payload.page}`).then((res)=>{
 

@@ -1,44 +1,34 @@
-import React from 'react';
-import BirthDays from "./Birthdays";
-import InvoiceTable from "../presentational/InvoiceTable";
-import {loadunpaid} from "../../invoices";
-import {loadLowStock} from "../../stock";
-import {connect} from "react-redux";
-import StockTable from "../presentational/StockTable";
-const Home = ({invoices, stock,ui, [loadunpaid.type]:loadUnpaid,[loadLowStock.type]: loadLow}) =>
-{
+import React,{} from 'react';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { Paper } from '@material-ui/core';
+import {SignIn} from '../presentational/SignIn';
+import SignUp from '../presentational/SignUp';
+const Home = ({user})=>{
+    const content = user? (<Box>
+        <Paper>
+        <Typography variant={'h1'}>
+    Hello {user}
+</Typography>
+        </Paper>
+    </Box>):(<Grid container spacing={2}>
+        <Grid item xs={12} md={5}>
+            <SignIn handleSubmit={(values)=>{
+                console.log(values)
+            }} />
+        </Grid>
+        <Grid item container xs={12} md={2} alignContent={'center'} justify={'center'} direction={'column'}>
+        <Typography variant={'h1'}>
+    Or
+</Typography>
+        </Grid>
+        <Grid item xs={12} md={5}>
+            <SignUp />
+        </Grid>
 
-    return(<div className={'row'}>
-        <div className='col-xl-3 col-lg-4 col-md-5 col-sm-4'>
-            <BirthDays/>
-        </div>
-        <div className='col-xl-9 col-lg-8 col-md-5 col-sm-4'>
-            <h2>Unpaid Invoices</h2>
-            <InvoiceTable invoices={invoices} ui={ui} load={loadUnpaid} />
-            <h2>
-                Low Stock
-            </h2>
-            <StockTable stock={stock} ui={ui} load={loadLow}/>
-        </div>
+</Grid>)
+    return content;
+}
 
-    </div>);
-}
-const mapStateToProps = state =>{
 
-    return {
-        invoices: state.invoicing.unpaid,
-        stock: state.stock.low,
-        ui: state.ui,
-    }
-}
-const mapDispatchToProps = dispatch =>{
-    return {
-        [loadLowStock.type]: (state)=>{
-            dispatch(loadLowStock(state));
-        },
-        [loadunpaid.type]: (state)=>{
-            dispatch(loadunpaid(state));
-        }
-    }
-}
-export default connect(mapStateToProps,mapDispatchToProps)( Home);
+export default Home;

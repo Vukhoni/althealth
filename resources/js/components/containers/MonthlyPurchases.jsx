@@ -26,6 +26,7 @@ const MonthlyPurchases = ({purchases, ui, [loadMonthly.type]:load})=>{
         },
         series: [
             {
+                name: 'Purchases',
                 data: purchases.map(purchase =>{
                     return {
                         name: purchase.Month,
@@ -40,28 +41,26 @@ const MonthlyPurchases = ({purchases, ui, [loadMonthly.type]:load})=>{
         return <ScaleLoader/>
     return (
         <Fragment>
-            <h2>Monthly Purchases</h2>
-            <div className='row'>
-                <div className='col-6'>
-                    <table className="table table-striped table-bordered ">
-                        <thead className='thead-light'>
-                        <tr>
-                            <th>
-                                Client
-                            </th>
-                            <th>
-                                Frequency
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {render(purchases)}
-                        </tbody>
-                    </table>
-                </div>
-                <div className='col-6'>
-                    <HighchartsReact highcharts={Highcharts} options={options} />
-                </div>
+
+            <div className='col-6'>
+                <table className="table table-striped table-bordered ">
+                    <thead className='thead-light'>
+                    <tr>
+                        <th>
+                            Client
+                        </th>
+                        <th>
+                            Frequency
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {render(purchases)}
+                    </tbody>
+                </table>
+            </div>
+            <div className='col-6'>
+                <HighchartsReact highcharts={Highcharts} options={options} />
             </div>
         </Fragment>
     )

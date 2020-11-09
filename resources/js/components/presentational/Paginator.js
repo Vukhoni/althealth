@@ -19,7 +19,7 @@ const Paginator = ({page, first, last, load})=>{
                 </li>
                 <li>
                     <div className="input-group mb-3">
-                        <input value={goto} type='number' className="form-control" onChange={(e)=>{setGoto(e.target.value)}} aria-describedby="basic-addon2"/>
+                        <input value={goto} type='number'  onChange={(e)=>{setGoto(e.target.value)}} aria-describedby="basic-addon2"/>
                         <div className="input-group-append">
                             <button type='button' className='form-control' onClick={() =>{load(goto); }}>Go</button>
                         </div>
