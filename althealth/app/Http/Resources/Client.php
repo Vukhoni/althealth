@@ -15,16 +15,16 @@ class Client extends JsonResource
     public function toArray($request)
     {
         return [
-        'ID' => $this->Client_id,
-        'Name' => $this->C_name,
-        'Surname'=> $this->C_surname,
-        'Address' =>$this->Address,
-        'Code' => $this->Code,
-        'Cellphone'=>$this->C_Tel_C,
-        'Telephone' => $this->C_Tel_H,
-        'Workphone' => $this->C_Tel_W,
-        'Email' => $this->Email,
-        'ReferenceID' => $this->Reference_ID,
-    ];
+            'ID' => $this->Client_id,
+            'Name' => $this->C_name,
+            'Surname' => $this->C_surname,
+            'Address' => $this->Address,
+            'Code' => $this->Code,
+            'Cellphone' => $this->C_Tel_C,
+            'Telephone' => $this->C_Tel_H,
+            'Workphone' => $this->C_Tel_W,
+            'Email' => $this->C_Email,
+            'ReferenceID' => $this->Reference_ID,
+        ];
     }
 }

@@ -15,10 +15,10 @@ class LowStock extends JsonResource
     public function toArray($request)
     {
         return [
-        'Supplement' => $this->SUPPLEMENT,
-        'SupplierInformation' => $this->SUPPLIER_INFORMATION,
-        'MinLevel'=> $this->MIN_LEVELS,
-        'CurrentLevel' =>$this->CURRENT_STOCK
-    ];
+            'Supplement' => $this->SUPPLEMENT,
+            'SupplierInformation' => $this->SUPPLIER_INFORMATION,
+            'MinLevel' => $this->MIN_LEVELS,
+            'CurrentLevel' => $this->CURRENT_STOCK
+        ];
     }
 }

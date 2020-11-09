@@ -1,14 +1,16 @@
 import React, {Fragment, useEffect, useState} from 'react';
+import Grid from '@material-ui/core/Grid';
+import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFrown} from "@fortawesome/free-solid-svg-icons/faFrown";
-import ScaleLoader from "react-spinners/ScaleLoader";
 import {loadMonthly} from "../../purchases";
 import {connect} from "react-redux";
 
 
-const MonthlyPurchases = ({purchases, ui, [loadMonthly.type]:load})=>{
+const MonthlyPurchases = ({purchases, [loadMonthly.type]:load})=>{
 
     useEffect(()=>{
         load();
@@ -37,47 +39,35 @@ const MonthlyPurchases = ({purchases, ui, [loadMonthly.type]:load})=>{
         ]
     };
 
-    <Grid container>
-            <DataGrid rows={map} columns={clientCols} autoPageSize={true} autoHeight={true}/>
-    </Grid>
+    return(
+        <Grid container>
+            <Grid item xs={12} sm={6} >
+            <div className="ag-theme-alpine" style={ { height: 400, width: '100%' } }>
+            <AgGridReact
+
+                rowData={purchases}
+                onRowDoubleClicked={(arg)=>{
+                    console.log(arg);
+                }}
+                >
+                <AgGridColumn field="Month" filter={true} headerName={"Month"}></AgGridColumn>
+                <AgGridColumn field={'Purchases'} filter={true} headerName={'Purchases'}></AgGridColumn>
+
+
+            </AgGridReact>
+            </div>
+            </Grid>
+            <Grid item xs={12} sm={6} >
+            <HighchartsReact highcharts={Highcharts} options={options} />
+            </Grid>
+        </Grid>
+    )
 }
-const render = (purchases) =>{
-    if (purchases.length === 0)
-    {
-        return (
-            <tr>
-                <td colSpan='2'>
-                    <h4 className='text-center'>Something Went wrong fetching purchases</h4>
 
-                    <h5 className='text-center'><FontAwesomeIcon icon={faFrown} /></h5>
-
-                </td>
-            </tr>
-        );
-    }
-    else
-    {
-
-        return purchases.map(purchase =>{
-            return(
-                <tr key={purchase.Month}>
-                    <td>
-                        {purchase.Month}
-                    </td>
-                    <td>
-                        {purchase.Purchases}
-                    </td>
-                </tr>
-            )
-        })
-    }
-
-}
 const mapStateToProps = state =>{
 
     return {
-        purchases: state.purchases.monthly,
-        ui: state.ui,
+        purchases: state.purchases.monthly
     }
 }
 const mapDispatchToProps = dispatch =>{

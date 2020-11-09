@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+import {useHistory} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -28,7 +29,7 @@ const SignIn = ({ handleSubmit }) => {
     [fields.Password]: ''
 
   }
-  console.log(initValues);
+
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
@@ -92,11 +93,7 @@ const SignIn = ({ handleSubmit }) => {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-            <Link component={RouterLink} to="/passwordreset">
-                Forgot password?
-              </Link>
-            </Grid>
+
             <Grid item>
             <Link component={RouterLink} to="/register">
                 {"Don't have an account? Sign Up"}
@@ -111,7 +108,7 @@ const SignIn = ({ handleSubmit }) => {
 const mapStateToProps = state =>{
 
     return {
-
+        user : state.authentication
     }
 }
 const mapDispatchToProps = dispatch =>{
@@ -123,8 +120,13 @@ const mapDispatchToProps = dispatch =>{
 
     }
 }
-const SignInSide =connect(mapStateToProps,mapDispatchToProps)(({ [login.type]: handleSubmit }) => {
+const SignInSide =connect(mapStateToProps,mapDispatchToProps)(({ [login.type]: handleSubmit, user }) => {
     const classes = useStyles();
+    let history = useHistory();
+    if(user)
+        {
+            history.push('/');
+        }
     return (
       <Grid container>
         <Grid item container xs={false} sm={4} md={7} alignContent={'center'}>

@@ -12,4 +12,14 @@ class Supplier extends Model
     public $incrementing = false;
     public $timestamps = false;
     protected $keyType = 'string';
+    protected $fillable = [
+        'Supplier_ID',
+        'Contact_Person',
+        'Supplier_Tel',
+        'Supplier_Email',
+        'Bank',
+        'Bank_code',
+        'Supplier_BankNum',
+        'Supplier_Type_Bank_Account',
+    ];
 }

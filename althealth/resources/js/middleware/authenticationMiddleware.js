@@ -14,6 +14,8 @@ const authenticationMiddleware = ({getState, dispatch }) => next => action =>{
 
                 let user = axios.get(`${baseUrl}/api/user`).then((response)=>{
                     next(login(response.data));
+                }).catch((error)=>{
+                    alert(`Event failed, reason: ${error}`);
                 });
             });
 
@@ -22,18 +24,18 @@ const authenticationMiddleware = ({getState, dispatch }) => next => action =>{
 
                 axios.post(`${baseUrl}/register`,{...action.payload, ID: action.payload.ClientID}).then((res)=>{
                     next(register(res.data.data));
-                }).catch(
-
-                )
+                }).catch((error)=>{
+                    alert(`Event failed, reason: ${error}`);
+                });
                 break;
         case logout.type:
             axios.post(`${baseUrl}/logout`,).then((res)=>{
                 next(logout());
-            }).catch(
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });
+            break;
 
-            )
-            break;
-            break;
         default:
             next(action);
     }

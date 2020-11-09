@@ -1,259 +1,363 @@
-import React, { useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup"; // for everything
-import { ScaleLoader } from "react-spinners";
-import { addClient } from "../../clients";
-import { loadReferences } from "../../reference";
-import { connect } from "react-redux";
+import React, { Fragment, useEffect } from 'react'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { FormControl, MenuItem, TextField } from '@material-ui/core'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import {Link as RouterLink} from 'react-router-dom';
+import Link from '@material-ui/core/Link'
+import Grid from '@material-ui/core/Grid'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import Typography from '@material-ui/core/Typography'
+import {useStyles} from '../../constants';
+import * as Yup from 'yup' // for everything
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import {connect} from "react-redux";
 
-const ClientForm = ({
-    references,
-    ui,
-    [addClient.type]: createClient,
-    load
-}) => {
-    useEffect(() => {
-        load();
-    }, []);
-    if (ui.loading.references && ui.loading.references) return <ScaleLoader />;
-    return (
-        <div className="card">
-            <div className="card-header">
-                <h3>Add Client</h3>
-            </div>
-            <div className="card-body">
-                <Formik
-                    initialValues={{
-                        [ClientID]: "",
-                        [Telephone]: "",
-                        [Cellphone]: "",
-                        [Email]: "",
-                        [ReferenceID]: 0,
-                        [Name]: "",
-                        [Surname]: "",
-                        [Code]: 0,
-                        [Address]: "",
-                        [Workphone]: ""
-                    }}
-                    onSubmit={values => {
-                        console.log(values);
-                    }}
-                    validationSchema={Yup.object({
-                        [ClientID]: Yup.number()
-                            .min(SAID, SAIDLengthErrorMsg)
-                            .max(SAID, SAIDLengthErrorMsg)
-                            .test("Luhn", ClientIDLuhnFailureMsg, function(
-                                value
-                            ) {
-                                const { path, createError } = this;
-                                let nDigits = 0;
-                                if (value) {
-                                    nDigits = value.length;
-                                }
+import * as althealth from '../../constants'
+import {loadReferences} from '../../reference';
+import {editClient} from '../../clients';
+const {fields, validations,errorMessages} = althealth.default;
 
-                                let nSum = 0;
-                                let isSecond = false;
-                                for (let i = nDigits - 1; i >= 0; i--) {
-                                    let d = value[i] - "0";
 
-                                    if (isSecond == true) d = d * 2;
+const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,Cellphone, Workphone, Email ,ReferenceID,references,[loadReferences.type]: load }) => {
+  const classes = useStyles();
+  useEffect(()=>{
+    load();
+  }, [])
+  const options = references && references.map(({ID, Description})=>{
+  return <MenuItem value={ID} key={ID}>{Description}</MenuItem>
+  });
+  return (
+    <Fragment>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5' gutterBottom>
+          Profile
+        </Typography>
+        <Formik
+          initialValues={{
+            [fields.Name]: Name,
+            [fields.Surname]: Surname,
+            [fields.Email]: Email,
+            [fields.ClientID]: ID,
+            [fields.Address]: Address,
+            [fields.Code]: Code,
+            [fields.Telephone]: Telephone,
+            [fields.Cellphone]: Cellphone,
+            [fields.Workphone]: Workphone,
+            [fields.ReferenceID]: ReferenceID,
 
-                                    // We add two digits to handle
-                                    // cases that make two digits
-                                    // after doubling
-                                    nSum += d / 10;
-                                    nSum += d % 10;
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={Yup.object({
+            [fields.Name]: Yup.string()
+              .max(
+                validations.NameLength,
+                `Name cant be more than ${validations.NameLength} characters`
+              )
+              .required(`Name is required`),
+            [fields.Surname]: Yup.string()
+              .max(
+                validations.SurnameLength,
+                `Last Name cant be more than ${validations.SurnameLength} characters`
+              )
+              .required(`Last Name is required`),
+            [fields.ClientID]: Yup.string()
+              .matches(
+                new RegExp(validations.SAIDRegex),
+                errorMessages.SATelRegexErrorMsg
+              )
+              .min(validations.SAIDLength, errorMessages.SAIDLengthErrorMsg)
+              .max(validations.SAIDLength, errorMessages.SAIDLengthErrorMsg)
+              .test('Luhn', errorMessages.ClientIDLuhnFailureMsg, function (
+                value
+              ) {
+                const { path, createError } = this
+                let nDigits = 0
+                let tempTotal = 0;
+                let checkSum = 0;
+                let multiplier = 1;
+                if (value) {
+                  nDigits = value.length;
+                  for (var i = 0; i < nDigits; ++i) {
+                    tempTotal = parseInt(value.charAt(i)) * multiplier;
+                    if (tempTotal > 9) {
+                        tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+                    }
+                    checkSum = checkSum + tempTotal;
+                    multiplier = (multiplier % 2 == 0) ? 1 : 2;
+                    }
+                    return (
+                        (checkSum % 10) == 0 ||
+                      createError({
+                        path,
+                        message: errorMessages.ClientIDLuhnFailureMsg
+                      })
+                    )
+                }
 
-                                    isSecond = !isSecond;
-                                }
-                                return (
-                                    nSum % 10 == 0 ||
-                                    createError({
-                                        path,
-                                        message: ClientIDLuhnFailureMsg
-                                    })
-                                );
-                            })
-                            .required(`${[ClientID]} is required`),
-                        [Telephone]: Yup.string()
-                            .min(SATelLength, SATelLengthErrorMsg)
-                            .max(SATelLength + 2, SATelLengthErrorMsg)
-                            .matches(
-                                new RegExp(SATelRegex),
-                                SATelRegexErrorMsg
-                            ),
-                        [Cellphone]: Yup.string()
-                            .min(SATelLength, SATelLengthErrorMsg)
-                            .max(SATelLength + 2, SATelLengthErrorMsg)
-                            .matches(new RegExp(SATelRegex), SATelRegexErrorMsg)
-                            .required(`${[Cellphone]} is required`),
-                        [Email]: Yup.string()
-                            .email()
-                            .max(
-                                200,
-                                `${[Email]} cant be more than 30 characters`
-                            )
-                            .required(`${[Email]} is required`),
-                        [ReferenceID]: Yup.number()
-                            .oneOf(
-                                references.map(ref => {
-                                    return ref.ID;
-                                }),
-                                "Please select predetermined values"
-                            )
-                            .required(`${[ReferenceID]} is required`),
-                        [Name]: Yup.string()
-                            .min(3, `${[Name]} must be atleast 3 characters`)
-                            .max(
-                                30,
-                                `${[Name]} cant be more than 30 characters`
-                            )
-                            .required(`${[Name]} is required`),
-                        [Surname]: Yup.string()
-                            .min(3, `${[Surname]} must be atleast 3 characters`)
-                            .max(
-                                50,
-                                `${[Surname]} cant be more than 50 characters`
-                            )
-                            .required(`${[Surname]} is required`),
-                        [Code]: Yup.number()
-                            .min(4, `${[Code]} must be 4 characters`)
-                            .max(4, `${[Code]} must be 4 characters`)
-                            .required(`${[Code]} is required`),
-                        [Address]: Yup.string()
-                            .min(
-                                20,
-                                `${[Address]} must be atleast 20 characters`
-                            )
-                            .max(
-                                200,
-                                `${[Address]} cant be more than 200 characters`
-                            )
-                            .required(`${[Address]} is required`),
-                        [Workphone]: Yup.string()
-                            .min(SATelLength, SATelLengthErrorMsg)
-                            .max(SATelLength + 2, SATelLengthErrorMsg)
-                            .matches(new RegExp(SATelRegex), SATelRegexErrorMsg)
-                            .required(`${[Workphone]} is required`)
-                    })}
-                >
-                    <Form>
-                        <div className="form-group">
-                            <label htmlFor={Name}>First Name</label>
-                            <Field
-                                name={Name}
-                                id={Name}
-                                className="form-control"
-                            />
-                            <ErrorMessage name={Name} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={Surname}>Last Name</label>
-                            <Field
-                                name={Surname}
-                                id={Surname}
-                                className="form-control"
-                            />
-                            <ErrorMessage name={Surname} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={ClientID}>SA ID</label>
-                            <Field
-                                name={ClientID}
-                                id={ClientID}
-                                className="form-control"
-                            />
-                            <ErrorMessage name={ClientID} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={Cellphone}>Cellphone</label>
-                            <Field
-                                name={Cellphone}
-                                id={Cellphone}
-                                className="form-control"
-                            />
-                            <ErrorMessage name={Cellphone} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={Telephone}>Telephone: H</label>
-                            <Field
-                                name={Telephone}
-                                id={Telephone}
-                                className="form-control"
-                            />
-                            <ErrorMessage name={Telephone} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={Workphone}>Telephone: W</label>
-                            <Field
-                                name={Workphone}
-                                id={Workphone}
-                                className="form-control"
-                            />
-                            <ErrorMessage name={Workphone} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={Email}>Email</label>
-                            <Field name={Email} className="form-control" />
-                            <ErrorMessage name={Email} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={Address}>Address</label>
-                            <Field
-                                name={Address}
-                                as={"textarea"}
-                                className="form-control"
-                            />
-                            <ErrorMessage
-                                name={Address}
-                                className="alert alert-danger"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={Code}>Code</label>
-                            <Field name={Code} className="form-control" />
-                            <ErrorMessage name={Code} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor={ReferenceID}>Email</label>
-                            <Field
-                                name={ReferenceID}
-                                id={ReferenceID}
-                                as="select"
-                                className="form-control"
-                            >
-                                {references.map(reference => {
-                                    return (
-                                        <option
-                                            key={reference.ID}
-                                            value={reference.ID}
-                                        >
-                                            {reference.Description}
-                                        </option>
-                                    );
-                                })}
-                            </Field>
-                            <ErrorMessage name={ReferenceID} />
-                        </div>
-                        <div className="btn-group w-100">
-                            <button
-                                type="submit"
-                                className="btn btn-primary w-50"
-                            >
-                                Save
-                            </button>
-                            <button
-                                type="reset"
-                                className="btn btn-warning w-50"
-                            >
-                                Reset
-                            </button>
-                        </div>
-                    </Form>
-                </Formik>
-            </div>
-        </div>
-    );
-};
+                return createError({
+                    path,
+                    message: errorMessages.ClientIDLuhnFailureMsg
+                  })
+              })
+              .required(`${fields.ClientID} is required`),
+            [fields.Email]: Yup.string()
+              .email()
+              .max(
+                validations.EmailLength,
+                `${fields.Email} cant be more than ${validations.EmailLength} characters`
+              )
+              .required(`${fields.Email} is required`),
+              [fields.Address]: Yup.string()
+              .max(
+                validations.AddressLength,
+                `${fields.Address} cant be more than ${validations.AddressLength} characters`
+              )
+              .required(`${fields.Address} is required`),
+              [fields.Code]: Yup.string()
+              .min(
+                validations.CodeLength,
+                `${fields.Code} cant be less than ${validations.CodeLength} characters`
+              )
+              .max(
+                validations.CodeLength,
+                `${fields.Code} cant be more than ${validations.CodeLength} characters`
+              )
+              .required(`${fields.Code} is required`),
+              [fields.Cellphone]: Yup.string()
+                    .min(validations.SATelLength, errorMessages.SATelLengthErrorMsg)
+                    .max(validations.SATelLength + 8, errorMessages.SATelLengthErrorMsg)
+                    .matches(
+                        new RegExp(validations.SATelRegex),
+                        errorMessages.SATelRegexErrorMsg
+                    ),
+              [fields.Telephone]: Yup.string()
+                    .min(validations.SATelLength, errorMessages.SATelLengthErrorMsg)
+                    .max(validations.SATelLength + 8, errorMessages.SATelLengthErrorMsg)
+                    .matches(
+                        new RegExp(validations.SATelRegex),
+                        errorMessages.SATelRegexErrorMsg
+                    ),
+                    [fields.Workphone]: Yup.string()
+                    .min(validations.SATelLength, errorMessages.SATelLengthErrorMsg)
+                    .max(validations.SATelLength + 8, errorMessages.SATelLengthErrorMsg)
+                    .matches(
+                        new RegExp(validations.SATelRegex),
+                        errorMessages.SATelRegexErrorMsg
+                    ),
+              [fields.ReferenceID]: Yup.number()
+              .required(`${fields.ReferenceID} is required`)
 
-export default ClientForm;
+          })}
+        >
+          <Form>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Field name={fields.Name} id={fields.Name} >
+                  {({ field, form: { touched, errors }, meta }) => (
+                    <TextField
+                    {...field}
+                    variant='outlined'
+                    margin='normal'
+                    required
+                    fullWidth
+                    label='Name'
+                    autoComplete={fields.Name}
+                  />
+                  )}
+                </Field>
+                <ErrorMessage name={fields.Name} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Field id={fields.Surname} name={fields.Surname}>
+                  {({ field, form: { touched, errors }, meta }) => (
+                    <TextField
+                      {...field}
+                      variant='outlined'
+                      margin='normal'
+                      required
+                      fullWidth
+                      label='Last Name'
+                      autoComplete='lname'
+                    />
+                  )}
+                </Field>
+                <ErrorMessage name={fields.Surname} />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={fields.Email} id={fields.Email}>
+                {({ field, form: { touched, errors }, meta }) => (
+                  <TextField
+                    {...field}
+                    variant='outlined'
+                    margin='normal'
+                    required
+                    fullWidth
+                    label='Email Address'
+                    autoComplete={fields.Email}
+                  />
+                )}
+              </Field>
+              <ErrorMessage name={fields.Email} />
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={fields.ClientID} id={fields.ClientID}>
+                {({ field, form: { touched, errors }, meta }) => (
+                  <TextField
+                    {...field}
+                    variant='outlined'
+                    margin='normal'
+                    required
+                    fullWidth
+                    label='SA Identity Number'
+                    autoComplete={fields.ClientID}
+                  />
+                )}
+              </Field>
+              <ErrorMessage name={fields.ClientID} />
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={fields.Address} id={fields.Address}>
+                {({ field, form: { touched, errors }, meta }) => (
+                  <TextField
+                    {...field}
+                    variant='outlined'
+                    margin='normal'
+                    required
+                    fullWidth
+                    label='Address'
+                    autoComplete={fields.Address}
+                  />
+                )}
+              </Field>
+              <ErrorMessage name={fields.Address} />
+            </Grid>
+            <Grid item xs={12}>
+              <Field name={fields.Code} id={fields.Code}>
+                {({ field, form: { touched, errors }, meta }) => (
+                  <TextField
+                    {...field}
+                    variant='outlined'
+                    margin='normal'
+                    required
+
+                    label='Code'
+                    autoComplete={fields.Code}
+                  />
+                )}
+              </Field>
+              <ErrorMessage name={fields.Code} />
+            </Grid>
+            <Grid item xs={12}>
+                <Field name={fields.Telephone} id={fields.Telephone}>
+                  {({ field, form: { touched, errors }, meta }) => (
+                    <TextField
+                      {...field}
+                      variant='outlined'
+                      margin='normal'
+                      required
+                      fullWidth
+                      label='Telephone'
+                      autoComplete={fields.Telephone}
+                    />
+                  )}
+                </Field>
+                <ErrorMessage name={fields.Telephone} />
+              </Grid>
+              <Grid item xs={12}>
+                <Field name={fields.Cellphone} id={fields.Cellphone}>
+                  {({ field, form: { touched, errors }, meta }) => (
+                    <TextField
+                      {...field}
+                      variant='outlined'
+                      margin='normal'
+                      required
+                      fullWidth
+                      label='Cellphone'
+                      autoComplete={fields.Cellphone}
+                    />
+                  )}
+                </Field>
+                <ErrorMessage name={fields.Cellphone} />
+              </Grid>
+              <Grid item xs={12}>
+                <Field name={fields.Workphone} id={fields.Workphone}>
+                  {({ field, form: { touched, errors }, meta }) => (
+                    <TextField
+                      {...field}
+                      variant='outlined'
+                      margin='normal'
+                      required
+                      fullWidth
+                      label='Workphone'
+                      autoComplete={fields.Workphone}
+                    />
+                  )}
+                </Field>
+                <ErrorMessage name={fields.Workphone} />
+              </Grid>
+            <Grid item xs={12}>
+              <Field name={fields.ReferenceID} id={fields.ReferenceID} >
+                {({ field, form: { touched, errors }, meta }) => (
+                  <FormControl variant={'outlined'} fullWidth required>
+                    <InputLabel id="demo-simple-select-label">Reference</InputLabel>
+                    <Select {...field}   autoComplete='reference-id' >
+                      {options}
+                    </Select>
+                  </FormControl>
+                )}
+              </Field>
+              <ErrorMessage name={fields.ReferenceID} />
+            </Grid>
+
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='primary'
+              className={classes.submit}
+            >
+              Update
+            </Button>
+          </Form>
+        </Formik>
+
+        <Grid container justify='flex-end'>
+          <Grid item>
+
+            <Link variant='body2' component={RouterLink} to="/login">
+            Already have an account? Sign in
+              </Link>
+          </Grid>
+        </Grid>
+      </div>
+    </Fragment>
+  )
+}
+const mapStateToProps = state =>{
+
+    return {
+
+        references: state.references
+    }
+}
+const mapDispatchToProps = dispatch =>{
+    return {
+
+        [loadReferences.type]:()=>{
+            dispatch(loadReferences());
+        }
+    }
+}
+export  default  connect(mapStateToProps, mapDispatchToProps)(ClientForm);
+

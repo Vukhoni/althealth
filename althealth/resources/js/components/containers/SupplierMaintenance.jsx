@@ -1,5 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -14,16 +16,19 @@ const SupplierMaintenance = ({suppliers, [loadSuppliers.type]: all }) =>{
     useEffect(()=>{
         all();
     },[]);
-
+    let history = useHistory();
     return (
         <Grid container>
             <Grid item xs={12} >
+            <Link component={RouterLink} to="/add-supplier">
+                    Add Supplier
+                </Link>
             <div className="ag-theme-alpine" style={ { height: 400, width: '100%' } }>
             <AgGridReact
 
                 rowData={suppliers}
                 onRowDoubleClicked={(arg)=>{
-                    console.log(arg);
+                    history.push(`/edit-supplier/${arg.data.ID}`)
                 }}
                 >
                 <AgGridColumn field="ID" filter={true} headerName={"Supplier ID"}></AgGridColumn>

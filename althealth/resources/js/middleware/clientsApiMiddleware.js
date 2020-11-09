@@ -18,8 +18,9 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
                 const {data} =res.data;
                 next(loadIncomplete(data));
 
-
-            });
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });;
             break;
         case loadTopTen.type:
 
@@ -29,8 +30,9 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
                 const {data} =res.data;
                 next(loadTopTen(data));
 
-
-            });
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });;
             break;
         case loadClients.type:
 

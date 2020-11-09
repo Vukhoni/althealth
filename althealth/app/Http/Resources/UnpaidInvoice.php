@@ -16,9 +16,9 @@ class UnpaidInvoice extends JsonResource
     {
         return [
             'ClientID' => $this->CLIENT_ID,
-            'TopTenClient' => $this->CLIENT,
-            'InvoiceNumber'=> $this->INVOICE_NUMBER,
-            'Date' =>$this->INVOICE_DATE
+            'InvoiceNumber' => $this->INVOICE_NUMBER,
+            'Date' => $this->INVOICE_DATE,
+            'Client' => $this->CLIENT
         ];
     }
 }

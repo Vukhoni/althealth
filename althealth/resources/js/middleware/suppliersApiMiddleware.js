@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const url = `${baseUrl}/api/suppliers`;
 const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
-    const loading = getState().ui.loading;
+
     switch (action.type) {
 
         case loadSuppliers.type:
@@ -16,41 +16,44 @@ const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
                 const {data} =res.data;
                 next(loadSuppliers(data));
 
-
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
             });
             break;
         case addSupplier.type:
+            let item = {...action.payload, ID: action.payload.SupplierID};
 
-            axios.post(action.payload).then((res)=>{
-
+            axios.post(url,item).then((res)=>{
                 const {data} =res.data;
                 next(addSupplier(data));
-
-
-            })
+                alert(`Successfully added ${data}`);
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });
             break;
         case editSupplier.type:
 
-            axios.put(action.payload).then((res)=>{
-
+            axios.put(`${url}/${action.payload.ID}`,action.payload).then((res)=>{
                 const {data} =res.data;
                 next(editSupplier(data));
 
-
-            })
+                alert(`Successfully updated ${data}`);
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });
             break;
         case deleteSupplier.type:
 
-            axios.delete(action.payload).then((res)=>{
-
-                const {data} =res.data;
-                next(deleteSupplier(data));
-
-
-            })
+            axios.delete(`${url}/${action.payload.ID}`,action.payload).then((res)=>{
+                next(deleteSupplier(action.payload));
+                alert(`Successfully removed ${action.payload}`);
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });
             break;
         default:
             next(action);
+
     }
 };
 

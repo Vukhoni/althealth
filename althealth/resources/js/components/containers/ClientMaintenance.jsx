@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import {loadClients} from '../../clients';
@@ -14,7 +14,7 @@ const ClientMaintenance = ({clients, [loadClients.type]: all }) =>{
     useEffect(()=>{
         all();
     },[]);
-
+    let history = useHistory();
     return (
         <Grid container>
             <Grid item xs={12} >
@@ -23,7 +23,7 @@ const ClientMaintenance = ({clients, [loadClients.type]: all }) =>{
 
                 rowData={clients}
                 onRowDoubleClicked={(arg)=>{
-                    console.log(arg);
+                    history.push(`/edit-client/${arg.data.ID}`)
                 }}
                 >
                 <AgGridColumn field="ID" filter={true} headerName={"Client ID"}></AgGridColumn>

@@ -63,7 +63,7 @@ const Cost = 'Cost';
 const MinLevel = 'MinLevel';
 const CurrentLevel = 'CurrentLevel';
 const NappiCode = 'NappiCode';
-const VAT = 15;
+export const VAT = 0.15;
 const SupplierID = 'SupplierID';
 const Contact = 'Contact';
 const Bank = 'Bank';
@@ -72,6 +72,7 @@ const BankNumber = 'BankNumber';
 const AccountType = 'AccountType';
 const Password = 'Password';
 const SATelLength = 10;
+const SupplementID = 'SupplementID';
 export default {
 	fields: {
 		Email,
@@ -96,13 +97,14 @@ export default {
 		Bank,
 		BankCode,
 		BankNumber,
-		AccountType,
+        AccountType,
+        SupplementID
 	},
 	validations: {
 		SATelLength: SATelLength,
 		SAIDLength: SAIDLength,
 		SAIDRegex: '^\\d',
-		SATelRegex: '^(\\d{4})-(\\d{3})-(\\d{3})',
+		SATelRegex: '^\\(\\d{3}\\)-\\(\\d{3}\\)-\\(\\d{4}\\)',
 		SupplementIDLength: 20,
 		SupplierIDLength: 15,
 		DescriptionLength: 30,
@@ -120,7 +122,7 @@ export default {
 		ClientIDLuhnFailureMsg: `${ClientID} is invalid SA Identity Number`,
 		SAIDLengthErrorMsg: `South African ID Length is ${SAIDLength} characters`,
 		SATelLengthErrorMsg: `South African ${Telephone} length is ${SATelLength} characters`,
-		SATelRegexErrorMsg: `Please fill in field in (0000)-(000)-(000) format`,
+		SATelRegexErrorMsg: `Please fill in field in (000)-(000)-(0000) format`,
 	},
 };
 

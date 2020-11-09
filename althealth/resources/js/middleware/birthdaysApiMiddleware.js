@@ -11,9 +11,9 @@ const birthdaysApiMiddleware = ({getState, dispatch }) => next => action =>{
 
             axios.get(url).then((res)=>{
                 next(loadbirthdays(res.data.data));
-
-
-            })
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });
             break;
         default:
             next(action);

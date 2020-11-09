@@ -14,6 +14,18 @@ import Birthdays from './components/containers/Birthdays';
 import IncompletClients from './components/containers/IncompleteClients';
 import SupplierMaintenance from './components/containers/SupplierMaintenance';
 import SupplementMaintenance from './components/containers/SupplementMaintenance';
+import MonthlyPurchases from './components/containers/MonthlyPurchases';
+import Invoices from './components/containers/Invoices';
+import UnpaidInvoices from './components/containers/UnpaidInvoices';
+import AddSupplier from './components/containers/AddSupplier';
+import EditSupplier from './components/containers/EditSupplier';
+import AddSupplement from './components/containers/AddSupplement';
+import EditSupplement from './components/containers/EditSupplement';
+import Invoice from './components/containers/Invoice';
+import Shop from './components/containers/Shop';
+import Cart from './components/containers/Cart';
+import Profile from './components/containers/Profile';
+import ClientInfo from './components/containers/ClientInfo';
 const App = () => {
     return (
         <BrowserRouter>
@@ -22,29 +34,65 @@ const App = () => {
                     <Route exact path="/">
                         <Home/>
                     </Route>
+                    <Route exact path="/shop">
+                        <Shop/>
+                    </Route>
+                    <Route exact path="/profile">
+                        <Profile/>
+                    </Route>
+                    <Route exact path="/cart">
+                        <Cart/>
+                    </Route>
+                    <Route path="/edit-client/:id">
+                        <ClientInfo />
+                    </Route>
                     <Route exact path="/login">
                         <SignInSide />
                     </Route>
                     <Route exact path="/register">
                         <SignUp />
                     </Route>
-                    <Route path="/clients">
+                    <Route exact path="/clients">
                         <ClientMaintenance />
                     </Route>
-                    <Route path="/10">
+                    <Route exact path="/10">
                         <TopTenClients />
                     </Route>
-                    <Route path="/birthdays">
+                    <Route exact path="/birthdays">
                         <Birthdays />
                     </Route>
-                    <Route path="/no-info">
+                    <Route exact path="/no-info">
                         <IncompletClients />
                     </Route>
-                    <Route path="/suppliers">
+                    <Route exact path="/suppliers">
                         <SupplierMaintenance />
                     </Route>
-                    <Route path="/supplements">
+                    <Route exact path="/supplements">
                         <SupplementMaintenance />
+                    </Route>
+                    <Route exact path="/monthly">
+                        <MonthlyPurchases />
+                    </Route>
+                    <Route exact path="/invoices">
+                        <Invoices />
+                    </Route>
+                    <Route exact path="/unpaid">
+                        <UnpaidInvoices />
+                    </Route>
+                    <Route exact path="/add-supplier">
+                        <AddSupplier />
+                    </Route>
+                    <Route path="/edit-supplier/:id">
+                        <EditSupplier />
+                    </Route>
+                    <Route exact path="/add-supplement">
+                        <AddSupplement />
+                    </Route>
+                    <Route path="/edit-supplement/:id">
+                        <EditSupplement />
+                    </Route>
+                    <Route path="/viewinvoice/:id">
+                        <Invoice />
                     </Route>
                 </Switch>
             </Layout>

@@ -34,13 +34,13 @@ class SupplierController extends Controller
         //
         $validated = $request->validated();
         $item = [
-            'Supplier_ID' =>$validated['ID'] ,
-            'Contact_Person' =>$validated['Contact'],
-            'Supplier_Tel' =>$validated['Telephone'],
-            'Supplier_Email' =>$validated['Email'],
+            'Supplier_ID' => $validated['ID'],
+            'Contact_Person' => $validated['Contact'],
+            'Supplier_Tel' => $validated['Telephone'],
+            'Supplier_Email' => $validated['Email'],
             'Bank' => $validated['Bank'],
-            'Bank_code' =>$validated['BankCode'],
-            'Supplier_BankNum' =>$validated['BankNumber'],
+            'Bank_code' => $validated['BankCode'],
+            'Supplier_BankNum' => $validated['BankNumber'],
             'Supplier_Type_Bank_Account' => $validated['AccountType'],
         ];
         $supplier = new Supplier($item);
@@ -59,7 +59,7 @@ class SupplierController extends Controller
     {
         //
         $supplier = Supplier::query()->findOrFail([
-            'Supplier_ID'=> $id
+            'Supplier_ID' => $id
         ]);
         return new SupplierResource($supplier);
     }
@@ -76,17 +76,17 @@ class SupplierController extends Controller
         //
         $validated = $request->validated();
         $supplier = Supplier::query()->findOrFail([
-            'Supplier_ID'=> $id
+            'Supplier_ID' => $id
         ])->first();
 
         $item = [
-            'Supplier_ID' =>$validated['ID'] ,
-            'Contact_Person' =>$validated['Contact'],
-            'Supplier_Tel' =>$validated['Telephone'],
-            'Supplier_Email' =>$validated['Email'],
+            'Supplier_ID' => $validated['ID'],
+            'Contact_Person' => $validated['Contact'],
+            'Supplier_Tel' => $validated['Telephone'],
+            'Supplier_Email' => $validated['Email'],
             'Bank' => $validated['Bank'],
-            'Bank_code' =>$validated['BankCode'],
-            'Supplier_BankNum' =>$validated['BankNumber'],
+            'Bank_code' => $validated['BankCode'],
+            'Supplier_BankNum' => $validated['BankNumber'],
             'Supplier_Type_Bank_Account' => $validated['AccountType'],
         ];
         $supplier->fill($item);

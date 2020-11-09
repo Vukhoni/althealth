@@ -2,10 +2,11 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import Numeral from 'numeral'
-import saLocale from 'numeral/locales/en-za'
+
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import {loadStock} from '../../stock';
 import * as althealth from '../../constants';
 import {connect} from "react-redux";
@@ -18,6 +19,7 @@ const SupplementMaintenance = ({supplements, user, [loadStock.type]: load}) =>{
     useEffect(()=>{
         load();
     },[]);
+    let history = useHistory();
     let employeeContent
     if(user.is_employee){
         employeeContent =(
@@ -34,12 +36,15 @@ const SupplementMaintenance = ({supplements, user, [loadStock.type]: load}) =>{
     }
     return (<Grid container>
         <Grid item xs={12} >
+        <Link component={RouterLink} to="/add-supplement">
+                    Add Supplement
+                </Link>
         <div className="ag-theme-alpine" style={ { height: 400, width: '100%' } }>
         <AgGridReact
 
             rowData={supplements}
             onRowDoubleClicked={(arg)=>{
-                console.log(arg);
+                history.push(`/edit-supplement/${arg.data.ID}`)
             }}
             >
             <AgGridColumn field="ID" filter={true} headerName={"Supplement ID"}></AgGridColumn>

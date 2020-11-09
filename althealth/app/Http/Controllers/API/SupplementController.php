@@ -35,18 +35,20 @@ class SupplementController extends Controller
 
         $validated = $request->validated();
         $item = [
-            'Supplement_id' =>$validated['ID'] ,
-            'Supplement_Description' =>$validated['Description'],
-            'Cost_excl' =>$validated['Cost'],
-            'Min_levels' =>$validated['MinLevel'],
+
+            'Supplement_Description' => $validated['Description'],
+            'Cost_excl' => $validated['Cost'],
+            'Min_levels' => $validated['MinLevel'],
             'Current_stock_levels' => $validated['CurrentLevel'],
-            'Nappi_code' =>$validated['NappiCode'],
-            'Supplier_ID' =>$validated['SupplierID'],
+            'Nappi_code' => $validated['NappiCode'],
+            'Supplier_ID' => $validated['SupplierID'],
 
         ];
         $supplement = new Supplement($item);
+        $supplement->Cost_incl = $validated['Cost'] + ($validated['Cost'] * env('VAT'));
         $supplement->save();
-        $supplement->refresh();
+
+
         return new SupplementResource($supplement);
     }
 
@@ -60,7 +62,7 @@ class SupplementController extends Controller
     {
         //
         $supplement = Supplement::query()->findOrFail([
-            'Supplement_id'=> $id
+            'Supplement_id' => $id
         ]);
         return new SupplementResource($supplement);
     }
@@ -77,18 +79,18 @@ class SupplementController extends Controller
         //
 
         $supplement = Supplement::query()->findOrFail([
-            'Supplement_id'=> $id
+            'Supplement_id' => $id
         ])->first();
 
         $validated = $request->validated();
         $item = [
-            'Supplement_id' =>$validated['ID'] ,
-            'Supplement_Description' =>$validated['Description'],
-            'Cost_excl' =>$validated['Cost'],
-            'Min_levels' =>$validated['MinLevel'],
+            'Supplement_id' => $validated['ID'],
+            'Supplement_Description' => $validated['Description'],
+            'Cost_excl' => $validated['Cost'],
+            'Min_levels' => $validated['MinLevel'],
             'Current_stock_levels' => $validated['CurrentLevel'],
-            'Nappi_code' =>$validated['NappiCode'],
-            'Supplier_ID' =>$validated['SupplierID'],
+            'Nappi_code' => $validated['NappiCode'],
+            'Supplier_ID' => $validated['SupplierID'],
 
         ];
         $supplement->fill($item);

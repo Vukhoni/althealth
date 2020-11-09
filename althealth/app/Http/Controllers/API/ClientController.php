@@ -38,13 +38,13 @@ class ClientController extends Controller
         //
         $validated = $request->validated();
         $item = [
-            'Client_id' =>$validated['ID'] ,
-            'C_name' =>$validated['Name'],
-            'C_surname' =>$validated['Surname'],
-            'Address' =>$validated['Address'],
+            'Client_id' => $validated['ID'],
+            'C_name' => $validated['Name'],
+            'C_surname' => $validated['Surname'],
+            'Address' => $validated['Address'],
             'Code' => $validated['Code'],
-            'C_Tel_C' =>$validated['Cellphone'],
-            'C_Tel_H' =>$validated['Telephone'],
+            'C_Tel_C' => $validated['Cellphone'],
+            'C_Tel_H' => $validated['Telephone'],
             'C_Tel_W' => $validated['Workphone'],
             'Email' => $validated['Email'],
             'ReferenceID' => $validated['ReferenceID'],
@@ -65,7 +65,7 @@ class ClientController extends Controller
     {
         //
         $client = Client::query()->findOrFail([
-            'Client_id'=> $id
+            'Client_id' => $id
         ]);
         return new ClientResource($client);
     }
@@ -82,16 +82,16 @@ class ClientController extends Controller
         //
         $validated = $request->validated();
         $client = Client::query()->findOrFail([
-            'Client_id'=> $id
+            'Client_id' => $id
         ])->first();
         $item = [
-            'Client_id' =>$validated['ID'] ,
-            'C_name' =>$validated['Name'],
-            'C_surname' =>$validated['Surname'],
-            'Address' =>$validated['Address'],
+            'Client_id' => $validated['ID'],
+            'C_name' => $validated['Name'],
+            'C_surname' => $validated['Surname'],
+            'Address' => $validated['Address'],
             'Code' => $validated['Code'],
-            'C_Tel_C' =>$validated['Cellphone'],
-            'C_Tel_H' =>$validated['Telephone'],
+            'C_Tel_C' => $validated['Cellphone'],
+            'C_Tel_H' => $validated['Telephone'],
             'C_Tel_W' => $validated['Workphone'],
             'Email' => $validated['Email'],
             'ReferenceID' => $validated['ReferenceID'],

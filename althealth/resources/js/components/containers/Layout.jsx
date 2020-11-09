@@ -16,7 +16,7 @@ import Container from '@material-ui/core/Container';
 import {Link as RouterLink} from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import Copyright from '../presentational/Copyright';
 import DrawerContent,{GuestContent} from '../presentational/DrawerContent';
 import {connect} from "react-redux";
@@ -111,7 +111,7 @@ const Layout = (props)=> {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const {user} = props;
+  const {user, cart} = props;
   let content = user? DrawerContent(user): GuestContent();
   return (
     <div className={classes.root}>
@@ -133,12 +133,14 @@ const Layout = (props)=> {
                     Alt Health
                     </Typography>
                 </Link>
-
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
+                <Link component={RouterLink} to="/cart" variant='h3' color='secondary' >
+                <IconButton color="inherit">
+            <Badge badgeContent={cart.length} color="secondary">
+              <ShoppingCart />
             </Badge>
           </IconButton>
+                </Link>
+
         </Toolbar>
       </AppBar>
       <Drawer
@@ -172,7 +174,8 @@ const Layout = (props)=> {
 const mapStateToProps = state =>{
 
     return {
-        user: state.authentication
+        user: state.authentication,
+        cart: state.invoicing.cart
     }
 }
 const mapDispatchToProps = dispatch =>{

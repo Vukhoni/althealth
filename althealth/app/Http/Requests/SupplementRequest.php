@@ -24,14 +24,13 @@ class SupplementRequest extends FormRequest
     public function rules()
     {
         return [
-            'ID' => 'required|numeric|max:20',
-            'Contact' => 'required|max:30',
-            'Telephone' => 'size:12|regex:^(\\d{4})-(\\d{3})-(\\d{3})',
-            'Email' => 'required|email|size:50',
-            'Bank' =>'required|max:30',
-            'BankCode' => 'required|max:10',
-            'BankNumber' => 'required|max:30',
-            'AccountType'=> 'required|max:30',
+            'ID' => 'max:15',
+            'Description' => 'required|max:30',
+            'Cost' => 'numeric|required',
+            'MinLevel' => 'numeric|required',
+            'CurrentLevel' => 'numeric|required',
+            'NappiCode' => 'required|max:20',
+            'SupplierID' => 'required|max:14',
         ];
     }
 }

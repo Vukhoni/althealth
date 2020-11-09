@@ -179,15 +179,6 @@ const GuestContent = ()=>{
                 </Link>
 
             </ListItem>
-            <ListItem button>
-            <ListItemIcon>
-                <VpnKeyIcon />
-            </ListItemIcon>
-                <Link component={RouterLink} to="/passwordreset">
-                    Forgot Password
-                </Link>
-
-            </ListItem>
         </List>
 
     )

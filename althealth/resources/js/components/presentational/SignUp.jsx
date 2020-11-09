@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { FormControl, MenuItem, TextField } from '@material-ui/core'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import {Link as RouterLink} from 'react-router-dom';
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -310,9 +311,10 @@ const SignUp = ({ [register.type]: createAccount, references,[loadReferences.typ
 
         <Grid container justify='flex-end'>
           <Grid item>
-            <Link href='#' variant='body2'>
-              Already have an account? Sign in
-            </Link>
+
+            <Link variant='body2' component={RouterLink} to="/login">
+            Already have an account? Sign in
+              </Link>
           </Grid>
         </Grid>
       </div>

@@ -12,15 +12,8 @@ const supplier = createSlice({
         },
         deleteSupplier:
         (state, action)=>{
-            return state.map((item)=>{
-                if(item.ID == action.payload.ID)
-                {
-                    return
-                }
-                else
-                {
-                    return item;
-                }
+            return state.filter((item)=>{
+                return item.ID !== action.payload.ID;
             });
         },
         editSupplier:(state, action)=>{

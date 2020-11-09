@@ -2,13 +2,15 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ReferenceController;
 use App\Http\Controllers\API\ClientController;
-use App\Http\Controllers\API\IncompleteClientController;
-use App\Http\Controllers\API\TopTenClientController;
-use App\Http\Controllers\API\LowStockController;
-use App\Http\Controllers\API\SupplementController;
 use App\Http\Controllers\API\SupplierController;
+use App\Http\Controllers\API\PurchasesController;
+use App\Http\Controllers\API\ReferenceController;
+use App\Http\Controllers\API\SupplementController;
+use App\Http\Controllers\API\TopTenClientController;
+use App\Http\Controllers\API\IncompleteClientController;
+use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\API\UnpaidInvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,9 @@ Route::group(['middleware' => 'auth:api'], function () {
         'toptenclients' => TopTenClientController::class,
         'suppliers' => SupplierController::class,
         'supplements' => SupplementController::class,
+        'monthlyPurchases' => PurchasesController::class,
+        'invoices' => InvoiceController::class,
+        'unpaidinvoices' => UnpaidInvoiceController::class
     ]);
     Route::get('/birthdays', [ClientController::class, 'Birthdays']);
 });
