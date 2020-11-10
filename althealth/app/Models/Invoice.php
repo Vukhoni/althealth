@@ -11,6 +11,8 @@ class Invoice extends Model
     use HasFactory;
     protected $table = 'tblInv_Info';
     protected $primaryKey = 'Inv_Num';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'Inv_Date',

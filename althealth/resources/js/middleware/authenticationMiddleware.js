@@ -17,6 +17,8 @@ const authenticationMiddleware = ({getState, dispatch }) => next => action =>{
                 }).catch((error)=>{
                     alert(`Event failed, reason: ${error}`);
                 });
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
             });
 
             break;
