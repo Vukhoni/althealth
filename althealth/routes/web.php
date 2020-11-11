@@ -55,8 +55,8 @@ Route::post('/register', function (RegisterRequest $request) {
         $response = $http->post('http://www.althealth.co.za/oauth/token', [
             'form_params' => [
                 'grant_type' => 'password',
-                'client_id' => '91f9e4e6-d3ec-4a85-a2f8-d9bb38a5656c',
-                'client_secret' => 'Ndh5qbFcj0xNcFWkXZ48ghR2eVRJ8XFDE11cm2Lg',
+                'client_id' => '91c46987-b558-423d-984d-4b0638c80cf8',
+                'client_secret' => 'JVZa88I8pCxLJogUuNQOqr3ABfez5eBI40A9ewot',
                 'username' => $request['Email'],
                 'password' => $request['Password'],
                 'scope' => '*'
