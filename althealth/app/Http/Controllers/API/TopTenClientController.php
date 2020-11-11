@@ -18,7 +18,8 @@ class TopTenClientController extends Controller
     public function index()
     {
         //
-        $users = DB::select('select CLIENT Client, FREQUENCY Frequency from utop_ten_clients');
+        $users = DB::select('select CLIENT Client, FREQUENCY Frequency from top_ten_clients');
+        return $users;
     }
 
     /**
