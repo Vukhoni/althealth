@@ -57,6 +57,7 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
             }).catch((error)=>{
                 alert(`Event failed, reason: ${error}`);
             });
+            break;
         case editClient.type:
 
             axios.patch(`${clients}/${action.payload.ID}`,action.payload).then((res)=>{
@@ -68,6 +69,7 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
             }).catch((error)=>{
                 alert(`Event failed, reason: ${error}`);
             });
+            break;
         case deleteClient.type:
 
                 axios.delete(`${clients}/${action.payload.ID}`,action.payload).then((res)=>{
@@ -79,6 +81,7 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
                 }).catch((error)=>{
                     alert(`Event failed, reason: ${error}`);
                 });
+                break;
         default:
             next(action);
     }

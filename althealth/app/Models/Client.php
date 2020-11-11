@@ -8,7 +8,7 @@ use Laravel\Passport\Client as BaseClient;
 
 class Client extends BaseClient
 {
-    use HasFactory;
+    // use HasFactory;
 
     public function skipsAuthorization()
     {
