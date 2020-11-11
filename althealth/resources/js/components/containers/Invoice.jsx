@@ -143,13 +143,13 @@ const Invoice = ({invoices, [loadinvoices.type]: load, [updateInvoice.type]: upd
                                     <TableCell>{invoice_item.Supplement.Description}</TableCell>
                                     <TableCell>{invoice_item.Quantity}</TableCell>
                                     <TableCell>{invoice_item.Price}</TableCell>
-                                    <TableCell>{invoice_item.Price * invoice_item.Quantity}</TableCell>
+                                    <TableCell>{Number(invoice_item.Price * invoice_item.Quantity).toFixed(2)}</TableCell>
                             </TableRow>)
                             })
                         }
                         <TableRow>
                             <TableCell colSpan={4}>Total Due</TableCell>
-                            <TableCell>{totalAmount}</TableCell>
+                            <TableCell>{Number(totalAmount).toFixed(2)}</TableCell>
                         </TableRow>
                         </TableBody>
                     </Table>

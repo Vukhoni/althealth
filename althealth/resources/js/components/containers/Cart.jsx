@@ -146,13 +146,13 @@ const Cart = ({cart, user,clients,[loadClients.type]: load, [setQuantity.type]: 
         </IconButton>
                                         </TableCell>
                                     <TableCell>{invoice_item.Price}</TableCell>
-                                    <TableCell>{invoice_item.Price * invoice_item.Quantity}</TableCell>
+                                    <TableCell>{Number(invoice_item.Price * invoice_item.Quantity).toFixed(2)}</TableCell>
                             </TableRow>)
                             })
                         }
                         <TableRow>
                             <TableCell colSpan={4}>Total Due</TableCell>
-                            <TableCell>{totalAmount}</TableCell>
+                            <TableCell>{Number().toFixed(2)}</TableCell>
                         </TableRow>
                         </TableBody>
                     </Table>

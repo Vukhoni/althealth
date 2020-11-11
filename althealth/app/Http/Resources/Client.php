@@ -20,7 +20,7 @@ class Client extends JsonResource
             'Surname' => $this->C_surname,
             'Address' => $this->Address,
             'Code' => $this->Code,
-            'Cellphone' => $this->C_Tel_C,
+            'Cellphone' => $this->C_Tel_Cell,
             'Telephone' => $this->C_Tel_H,
             'Workphone' => $this->C_Tel_W,
             'Email' => $this->C_Email,

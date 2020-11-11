@@ -29,19 +29,7 @@ class InvoiceController extends Controller
             return new InvoiceCollection(Invoice::where('Client_id', Client::where('C_Email', Auth::user()->email)->first()->Client_id)->get());
         }
     }
-    public function unpaid()
-    {
-        //
-        if (Auth::user()->is_employee) {
-            return new InvoiceCollection(Invoice::where('Inv_Paid', '<>', 'Y'));
-        } else {
 
-            return new InvoiceCollection(Invoice::where([
-                ['Client_id', Client::where('C_Email', Auth::user()->email)->first()->Client_id],
-                ['Inv_Paid', '<>', 'Y']
-            ])->get());
-        }
-    }
     /**
      * Store a newly created resource in storage.
      *

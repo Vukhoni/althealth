@@ -43,11 +43,11 @@ class ClientController extends Controller
             'C_surname' => $validated['Surname'],
             'Address' => $validated['Address'],
             'Code' => $validated['Code'],
-            'C_Tel_C' => $validated['Cellphone'],
+            'C_Tel_Cell' => $validated['Cellphone'],
             'C_Tel_H' => $validated['Telephone'],
             'C_Tel_W' => $validated['Workphone'],
-            'Email' => $validated['Email'],
-            'ReferenceID' => $validated['ReferenceID'],
+            'C_Email' => $validated['Email'],
+            'Reference_ID' => $validated['ReferenceID'],
         ];
         $client = new Client($item);
         $client->save();
@@ -90,13 +90,22 @@ class ClientController extends Controller
             'C_surname' => $validated['Surname'],
             'Address' => $validated['Address'],
             'Code' => $validated['Code'],
-            'C_Tel_C' => $validated['Cellphone'],
+            'C_Tel_Cell' => $validated['Cellphone'],
             'C_Tel_H' => $validated['Telephone'],
             'C_Tel_W' => $validated['Workphone'],
-            'Email' => $validated['Email'],
-            'ReferenceID' => $validated['ReferenceID'],
+            'C_Email' => $validated['Email'],
+            'Reference_ID' => $validated['ReferenceID'],
         ];
         $client->fill($item);
+        if (strlen($validated['Cellphone']) <= 0) {
+            $client->C_Tel_Cell = '';
+        }
+        if (strlen($validated['Telephone']) <= 0) {
+            $client->C_Tel_H = '';
+        }
+        if (strlen($validated['Workphone']) <= 0) {
+            $client->C_Tel_W = '';
+        }
         $client->save();
         $client->refresh();
         return new ClientResource($client);

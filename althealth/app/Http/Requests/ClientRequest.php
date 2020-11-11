@@ -20,9 +20,9 @@ class ClientRequest extends RegisterRequest
 
 
 
-            'Telephone' => 'size:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
-            'Workphone' => 'size:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
-            'Cellphone' => 'size:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
+            'Telephone' => 'nullable|max:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
+            'Workphone' => 'nullable|max:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
+            'Cellphone' => 'nullable|max:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
 
 
         ]);

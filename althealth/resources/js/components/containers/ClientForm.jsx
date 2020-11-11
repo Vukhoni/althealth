@@ -77,38 +77,6 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
               )
               .min(validations.SAIDLength, errorMessages.SAIDLengthErrorMsg)
               .max(validations.SAIDLength, errorMessages.SAIDLengthErrorMsg)
-              .test('Luhn', errorMessages.ClientIDLuhnFailureMsg, function (
-                value
-              ) {
-                const { path, createError } = this
-                let nDigits = 0
-                let tempTotal = 0;
-                let checkSum = 0;
-                let multiplier = 1;
-                if (value) {
-                  nDigits = value.length;
-                  for (var i = 0; i < nDigits; ++i) {
-                    tempTotal = parseInt(value.charAt(i)) * multiplier;
-                    if (tempTotal > 9) {
-                        tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
-                    }
-                    checkSum = checkSum + tempTotal;
-                    multiplier = (multiplier % 2 == 0) ? 1 : 2;
-                    }
-                    return (
-                        (checkSum % 10) == 0 ||
-                      createError({
-                        path,
-                        message: errorMessages.ClientIDLuhnFailureMsg
-                      })
-                    )
-                }
-
-                return createError({
-                    path,
-                    message: errorMessages.ClientIDLuhnFailureMsg
-                  })
-              })
               .required(`${fields.ClientID} is required`),
             [fields.Email]: Yup.string()
               .email()
@@ -139,21 +107,21 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
                     .matches(
                         new RegExp(validations.SATelRegex),
                         errorMessages.SATelRegexErrorMsg
-                    ),
+                    ).nullable(),
               [fields.Telephone]: Yup.string()
                     .min(validations.SATelLength, errorMessages.SATelLengthErrorMsg)
                     .max(validations.SATelLength + 8, errorMessages.SATelLengthErrorMsg)
                     .matches(
                         new RegExp(validations.SATelRegex),
                         errorMessages.SATelRegexErrorMsg
-                    ),
-                    [fields.Workphone]: Yup.string()
+                    ).nullable(),
+            [fields.Workphone]: Yup.string()
                     .min(validations.SATelLength, errorMessages.SATelLengthErrorMsg)
                     .max(validations.SATelLength + 8, errorMessages.SATelLengthErrorMsg)
                     .matches(
                         new RegExp(validations.SATelRegex),
                         errorMessages.SATelRegexErrorMsg
-                    ),
+                    ).nullable(),
               [fields.ReferenceID]: Yup.number()
               .required(`${fields.ReferenceID} is required`)
 
@@ -202,6 +170,7 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
                     variant='outlined'
                     margin='normal'
                     required
+
                     fullWidth
                     label='Email Address'
                     autoComplete={fields.Email}
@@ -218,6 +187,7 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
                     variant='outlined'
                     margin='normal'
                     required
+                    disabled
                     fullWidth
                     label='SA Identity Number'
                     autoComplete={fields.ClientID}
@@ -265,7 +235,7 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
                       {...field}
                       variant='outlined'
                       margin='normal'
-                      required
+
                       fullWidth
                       label='Telephone'
                       autoComplete={fields.Telephone}
@@ -281,7 +251,7 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
                       {...field}
                       variant='outlined'
                       margin='normal'
-                      required
+
                       fullWidth
                       label='Cellphone'
                       autoComplete={fields.Cellphone}
@@ -297,7 +267,7 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
                       {...field}
                       variant='outlined'
                       margin='normal'
-                      required
+
                       fullWidth
                       label='Workphone'
                       autoComplete={fields.Workphone}
@@ -331,15 +301,6 @@ const ClientForm = ({handleSubmit, ID, Name, Surname, Address, Code, Telephone,C
             </Button>
           </Form>
         </Formik>
-
-        <Grid container justify='flex-end'>
-          <Grid item>
-
-            <Link variant='body2' component={RouterLink} to="/login">
-            Already have an account? Sign in
-              </Link>
-          </Grid>
-        </Grid>
       </div>
     </Fragment>
   )

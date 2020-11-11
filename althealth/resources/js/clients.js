@@ -17,10 +17,10 @@ const clients = createSlice({
         loadClients: (state,action) => {
             state.clients = action.payload;
         },
-        addClient: () =>{
+        addClient: (state,action) =>{
             state.clients = [...state.clients,action.payload];
         },
-        editClient: () =>{
+        editClient: (state,action) =>{
             state.clients = state.clients.map(client =>{
                 if(client.ID === action.payload.ID)
                 {
@@ -32,7 +32,7 @@ const clients = createSlice({
                 }
             })
         },
-        deleteClient: () =>{
+        deleteClient: (state,action) =>{
             state.clients = state.clients.filter(client =>{
                 return client.ID !== action.payload.ID;
             })

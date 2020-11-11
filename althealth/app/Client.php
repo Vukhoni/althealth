@@ -12,4 +12,16 @@ class Client extends Model
     public $incrementing = false;
     public $timestamps = false;
     protected $keyType = 'string';
+    protected $fillable = [
+        'Client_id',
+        'C_name',
+        'C_surname',
+        'Address',
+        'Code',
+        'C_Tel_Cell',
+        'C_Tel_H',
+        'C_Tel_W',
+        'C_Email',
+        'Reference_ID',
+    ];
 }

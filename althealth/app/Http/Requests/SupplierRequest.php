@@ -25,7 +25,7 @@ class SupplierRequest extends FormRequest
         return [
             'ID' => 'required|max:20',
             'Contact' => 'required|max:30',
-            'Telephone' => 'size:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
+            'Telephone' => 'max:18|regex:/^\(\d{3}\)\-\(\d{3}\)\-\(\d{4}\)$/',
             'Email' => 'required|email|max:50',
             'Bank' => 'required|max:30',
             'BankCode' => 'required|max:10',

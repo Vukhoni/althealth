@@ -33,7 +33,7 @@ const EditClient = (props)=>{
     return (<Grid container spacing={2}>
         <Grid item xs={12} md={5}>
         <ClientForm handleSubmit={(item)=>{
-                edit(item)
+                edit({...item, ID: item.ClientID})
             }} {...item} />
         </Grid>
         <Divider orientation="vertical" flexItem />

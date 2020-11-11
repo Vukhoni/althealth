@@ -1,6 +1,7 @@
 import React, {Fragment,useEffect} from 'react';
 import Grid from '@material-ui/core/Grid'
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import {loadIncomplete} from "../../clients";
@@ -12,7 +13,7 @@ const IncompleteClients = ({clients, [loadIncomplete.type]:load})=>{
     useEffect(()=>{
         load();
     },[]);
-
+    let history = useHistory();
     return (<Grid container>
         <Grid item xs={12} >
         <div className="ag-theme-alpine" style={ { height: 400, width: '100%' } }>
@@ -20,7 +21,7 @@ const IncompleteClients = ({clients, [loadIncomplete.type]:load})=>{
 
                 rowData={clients}
                 onRowDoubleClicked={(arg)=>{
-                    console.log(arg);
+                    history.push(`/edit-client/${arg.data.ID}`)
                 }}
                 >
                 <AgGridColumn field="ID" filter={true} headerName={"Client ID"}></AgGridColumn>

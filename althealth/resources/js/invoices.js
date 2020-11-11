@@ -66,10 +66,16 @@ const invoicing = createSlice({
                     return item;
                 }
             });
+        },
+        completePurchase : (state, action)=>{
+            state.cart = [];
+        },
+        cancelPurchase: (state, action)=>{
+            state.cart = [];
         }
     }
 
 });
 
-export const {loadunpaid, loadinvoices, updateInvoice,addToCart, removeFromCart, setQuantity} = invoicing.actions;
+export const {loadunpaid, loadinvoices, updateInvoice,addToCart, removeFromCart, setQuantity, completePurchase, cancelPurchase} = invoicing.actions;
 export default  invoicing.reducer;

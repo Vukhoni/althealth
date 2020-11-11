@@ -1,4 +1,4 @@
-import {loadTopTen, loadClients, addClient, loadIncomplete} from "../clients";
+import {loadTopTen, loadClients, addClient, loadIncomplete, editClient, deleteClient} from "../clients";
 
 import {baseUrl} from '../constants';
 import axios from 'axios';
@@ -32,7 +32,7 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
 
             }).catch((error)=>{
                 alert(`Event failed, reason: ${error}`);
-            });;
+            });
             break;
         case loadClients.type:
 
@@ -42,6 +42,8 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
                 next(loadClients(data));
 
 
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
             });
             break;
         case addClient.type:
@@ -52,7 +54,31 @@ const clientsApiMiddleware = ({getState, dispatch }) => next => action =>{
                 next(addClient(data));
 
 
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
             });
+        case editClient.type:
+
+            axios.patch(`${clients}/${action.payload.ID}`,action.payload).then((res)=>{
+
+                const {data} =res.data;
+                next(editClient(data));
+
+
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });
+        case deleteClient.type:
+
+                axios.delete(`${clients}/${action.payload.ID}`,action.payload).then((res)=>{
+
+
+                    next(deleteClient(action.payload));
+
+
+                }).catch((error)=>{
+                    alert(`Event failed, reason: ${error}`);
+                });
         default:
             next(action);
     }
