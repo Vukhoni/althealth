@@ -32,8 +32,8 @@ const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
             });
             break;
         case editSupplier.type:
-
-            axios.put(`${url}/${action.payload.ID}`,action.payload).then((res)=>{
+            let item = {...action.payload, ID: action.payload.SupplierID};
+            axios.put(`${url}/${action.payload.SupplierID}`,item).then((res)=>{
                 const {data} =res.data;
                 next(editSupplier(data));
 
