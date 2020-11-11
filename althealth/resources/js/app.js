@@ -26,6 +26,7 @@ import Shop from './components/containers/Shop';
 import Cart from './components/containers/Cart';
 import Profile from './components/containers/Profile';
 import ClientInfo from './components/containers/ClientInfo';
+import LowStock from './components/containers/LowStock';
 const App = () => {
     return (
         <BrowserRouter>
@@ -69,6 +70,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/supplements">
                         <SupplementMaintenance />
+                    </Route>
+                    <Route exact path="/lowstock">
+                        <LowStock />
                     </Route>
                     <Route exact path="/monthly">
                         <MonthlyPurchases />

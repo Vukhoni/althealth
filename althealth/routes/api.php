@@ -11,6 +11,7 @@ use App\Http\Controllers\API\TopTenClientController;
 use App\Http\Controllers\API\IncompleteClientController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\API\UnpaidInvoiceController;
+use App\Http\Controllers\API\LowStockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         'supplements' => SupplementController::class,
         'monthlyPurchases' => PurchasesController::class,
         'invoices' => InvoiceController::class,
-        'unpaidinvoices' => UnpaidInvoiceController::class
+        'unpaidinvoices' => UnpaidInvoiceController::class,
+        'lowstocks' => LowStockController::class
     ]);
     Route::get('/birthdays', [ClientController::class, 'Birthdays']);
     Route::get('/invoiceitems', [InvoiceController::class, 'items']);

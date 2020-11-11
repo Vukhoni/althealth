@@ -15,25 +15,12 @@ const {fields} = althealth.default;
 //import {addSupplementToCart} from "../../cart";
 
 
-const LowStock = ({supplements, user, [loadLowStock.type]: load}) =>{
+const LowStock = ({supplements, [loadLowStock.type]: load}) =>{
     useEffect(()=>{
         load();
     },[]);
-    let history = useHistory();
-    let employeeContent
-    if(user.is_employee){
-        employeeContent =(
-            <Fragment>
-            <AgGridColumn field={fields.Cost} filter={true} headerName={fields.Cost} valueFormatter={(args)=>{
-                return `R${args.value}`
-            }}></AgGridColumn>
-            <AgGridColumn field={fields.MinLevel} filter={true} headerName={fields.MinLevel}></AgGridColumn>
-            <AgGridColumn field={fields.CurrentLevel} filter={true} headerName={fields.CurrentLevel}></AgGridColumn>
-            <AgGridColumn field={fields.NappiCode} filter={true} headerName={fields.NappiCode}></AgGridColumn>
-            <AgGridColumn field={fields.SupplierID} filter={true} headerName={fields.SupplierID}></AgGridColumn>
-            </Fragment>
-        )
-    }
+    
+    
     return (<Grid container>
         <Grid item xs={12} >
         <Link component={RouterLink} to="/add-supplement">
@@ -46,9 +33,11 @@ const LowStock = ({supplements, user, [loadLowStock.type]: load}) =>{
            
             >
             <AgGridColumn field="Supplement" filter={true} headerName={"Supplement"}></AgGridColumn>
-            <AgGridColumn field={'SupplierInformation'} filter={true} headerName={fields.Description}></AgGridColumn>
+            <AgGridColumn field={'SupplierInformation'} filter={true} headerName={'Supplier Information'}></AgGridColumn>
+            <AgGridColumn field="MinLevel" filter={true} headerName={"Minimum Level"}></AgGridColumn>
+            <AgGridColumn field={'CurrentLevel'} filter={true} headerName={'CurrentLevel'}></AgGridColumn>
 
-            {employeeContent}
+            
 
 
 
@@ -61,8 +50,7 @@ const LowStock = ({supplements, user, [loadLowStock.type]: load}) =>{
 const mapStateToProps = state =>{
 
     return {
-        supplements: state.stock.low,
-        user: state.authentication
+        supplements: state.stock.low
     }
 }
 const mapDispatchToProps = dispatch =>{
