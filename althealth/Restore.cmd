@@ -1,0 +1,1 @@
+mysql -u root -pP@$$w0rd < dump.sql
