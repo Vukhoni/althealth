@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\InvoiceRequest;
 use App\Http\Resources\InvoiceCollection;
+use App\Http\Resources\InvoiceItemCollection;
 use App\Http\Resources\Invoice as InvoiceResource;
 
 class InvoiceController extends Controller
@@ -107,5 +108,10 @@ class InvoiceController extends Controller
         //
         $invoice->delete();
         return response()->noContent();
+    }
+    public function items()
+    {
+        //
+        return new InvoiceItemCollection(InvoiceItem::all());
     }
 }

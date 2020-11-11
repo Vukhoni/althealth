@@ -82,5 +82,5 @@ const invoicing = createSlice({
 
 });
 
-export const {loadunpaid, loadinvoices, updateInvoice,addToCart, removeFromCart, setQuantity, completePurchase, cancelPurchase} = invoicing.actions;
+export const {loadunpaid, loadinvoices, updateInvoice,addToCart, removeFromCart, setQuantity, completePurchase, cancelPurchase,loaditems} = invoicing.actions;
 export default  invoicing.reducer;

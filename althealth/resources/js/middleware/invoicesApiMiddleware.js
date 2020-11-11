@@ -1,9 +1,10 @@
-import {loadunpaid,loadinvoices,updateInvoice,completePurchase} from "../invoices";
+import {loadunpaid,loadinvoices,updateInvoice,completePurchase,loaditems} from "../invoices";
 import {baseUrl} from '../constants'
 import axios from 'axios';
 
 const url = `${baseUrl}/api/unpaidinvoices`;
 const invoices = `${baseUrl}/api/invoices`;
+const invoiceitems = `${baseUrl}/api/invoiceitems`;
 const invoicingApiMiddleware = ({getState, dispatch }) => next => action =>{
 
     switch (action.type) {
@@ -21,6 +22,12 @@ const invoicingApiMiddleware = ({getState, dispatch }) => next => action =>{
             axios.get(`${invoices}`).then((res)=>{
                 const {data} =res.data;
                 next(loadinvoices(data));
+                axios.get(`${invoiceitems}`).then((res)=>{
+                    const {data} =res.data;
+                    next(loaditems(data));
+                }).catch((error)=>{
+                    alert(`Event failed, reason: ${error}`);
+                });
             }).catch((error)=>{
                 alert(`Event failed, reason: ${error}`);
             });

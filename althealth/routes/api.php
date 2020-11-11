@@ -45,4 +45,5 @@ Route::group(['middleware' => 'auth:api'], function () {
         'unpaidinvoices' => UnpaidInvoiceController::class
     ]);
     Route::get('/birthdays', [ClientController::class, 'Birthdays']);
+    Route::get('/invoiceitems', [InvoiceController::class, 'items']);
 });

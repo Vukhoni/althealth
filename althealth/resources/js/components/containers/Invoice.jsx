@@ -21,12 +21,14 @@ import {loadinvoices,updateInvoice} from '../../invoices'
 import {useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-const Invoice = ({invoices, [loadinvoices.type]: load, [updateInvoice.type]: update })=>{
+const Invoice = ({invoices, invoiceitems,[loadinvoices.type]: load, [updateInvoice.type]: update })=>{
     useEffect(()=>{
         load();
     },[]);
     let {id} = useParams();
     let item;
+    let items ;
+
     let markAsPaid = null;
     let totalAmount = 0;
     const [comment, setComment] = useState();
@@ -42,7 +44,11 @@ const Invoice = ({invoices, [loadinvoices.type]: load, [updateInvoice.type]: upd
     }
     else{
         //setComment(item.Comment);
-        item.Items.forEach((supplement)=>{
+        items = invoiceitems.filter(val =>{
+            return val.InvoiceNumber == id;
+        })
+        items.forEach((supplement)=>{
+            
             totalAmount += supplement.Price * supplement.Quantity;
         })
         markAsPaid = String(item.IsPaid).trim() === 'Y'? null: <Button onClick={()=>{
@@ -137,7 +143,7 @@ const Invoice = ({invoices, [loadinvoices.type]: load, [updateInvoice.type]: upd
                         </TableHead>
                         <TableBody>
                         {
-                            item.Items.map((invoice_item, index)=>{
+                            items.map((invoice_item, index)=>{
                                return( <TableRow key={invoice_item.SupplementID}>
                                     <TableCell>{index}</TableCell>
                                     <TableCell>{invoice_item.Supplement.Description}</TableCell>
@@ -182,7 +188,7 @@ const mapStateToProps = state =>{
 
     return {
         invoices: state.invoicing.invoices,
-        invoiceitems: state.invoicing.invoices
+        invoiceitems: state.invoicing.invoiceitems
     }
 }
 const mapDispatchToProps = dispatch =>{
