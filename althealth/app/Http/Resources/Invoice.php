@@ -21,8 +21,7 @@ class Invoice extends JsonResource
             'IsPaid' => $this->Inv_Paid,
             'SettledDate' => $this->Inv_Paid_date,
             'Comment' => $this->Comment,
-            'Client' => $this->Client_id,
-            'Items' => InvoiceItemCollection::collection($this->items),
+            'Client' => $this->Client_id,            
             'ClientDetails' => new Client($this->client),
         ];
     }

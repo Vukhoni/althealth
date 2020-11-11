@@ -181,7 +181,8 @@ const Invoice = ({invoices, [loadinvoices.type]: load, [updateInvoice.type]: upd
 const mapStateToProps = state =>{
 
     return {
-        invoices: state.invoicing.invoices
+        invoices: state.invoicing.invoices,
+        invoiceitems: state.invoicing.invoices
     }
 }
 const mapDispatchToProps = dispatch =>{

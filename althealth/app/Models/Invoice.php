@@ -29,10 +29,7 @@ class Invoice extends Model
     // {
     //     return 'Inv_Num';
     // }
-    public function items()
-    {
-        return $this->hasMany(InvoiceItem::class, 'Inv_Num', 'Inv_Num');
-    }
+   
 
     public function client()
     {

@@ -6,6 +6,7 @@ const invoicing = createSlice({
         invoices:[],
         unpaid:[],
         cart:[],
+        invoiceitems: [],
     },
     reducers:{
         loadunpaid : (state, action)=>{
@@ -13,6 +14,9 @@ const invoicing = createSlice({
         },
         loadinvoices: (state,action) => {
             state.invoices = action.payload;
+        },
+        loaditems: (state, action)=>{
+            state.invoiceitems = action.payload;
         },
         updateInvoice: (state, action)=>{
             state.invoices = state.invoices.map((item)=>{
