@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const url = `${baseUrl}/api/suppliers`;
 const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
-
+    let item = action.payload? {...action.payload, ID: action.payload.SupplierID}:null;
     switch (action.type) {
 
         case loadSuppliers.type:
@@ -21,7 +21,7 @@ const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
             });
             break;
         case addSupplier.type:
-            let item = {...action.payload, ID: action.payload.SupplierID};
+            
 
             axios.post(url,item).then((res)=>{
                 const {data} =res.data;
@@ -32,7 +32,7 @@ const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
             });
             break;
         case editSupplier.type:
-            let item = {...action.payload, ID: action.payload.SupplierID};
+            
             axios.put(`${url}/${action.payload.SupplierID}`,item).then((res)=>{
                 const {data} =res.data;
                 next(editSupplier(data));
@@ -43,8 +43,8 @@ const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
             });
             break;
         case deleteSupplier.type:
-
-            axios.delete(`${url}/${action.payload.ID}`,action.payload).then((res)=>{
+            
+            axios.delete(`${url}/${action.payload.SupplierID}`,action.payload).then((res)=>{
                 next(deleteSupplier(action.payload));
                 alert(`Successfully removed ${action.payload}`);
             }).catch((error)=>{
