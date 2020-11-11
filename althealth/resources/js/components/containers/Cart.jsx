@@ -20,10 +20,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {loadClients} from '../../clients'
-import {setQuantity,removeFromCart} from '../../invoices'
+import {setQuantity,removeFromCart, completePurchase, cancelPurchase} from '../../invoices'
 import {connect} from 'react-redux';
 
-const Cart = ({cart, user,clients,[loadClients.type]: load, [setQuantity.type]: setItemCount, [removeFromCart.type]:remove })=>{
+const Cart = ({cart, user,clients,[loadClients.type]: load, [setQuantity.type]: setItemCount, [removeFromCart.type]:remove, [cancelPurchase.type]: cancel, [completePurchase.type]: buy})=>{
     useEffect(()=>{
         load();
     },[]);
@@ -163,8 +163,14 @@ const Cart = ({cart, user,clients,[loadClients.type]: load, [setQuantity.type]: 
             <Grid  item xs={12}>
                 <Box m={'auto'}>
                 <ButtonGroup>
-
-
+                    <Button color='primary' onClick={()=>{
+                        buy(cart);
+                    }}>
+                        Buy
+                    </Button>
+                    <Button color='secondary' onClick={cancel}>
+                        Cancel
+                    </Button>
                 </ButtonGroup>
                 </Box>
             </Grid>
@@ -189,6 +195,14 @@ const mapDispatchToProps = dispatch =>{
         },
         [removeFromCart.type]: (item)=>{
             dispatch(removeFromCart(item));
+        }
+        ,
+        [completePurchase.type]: (item)=>{
+            dispatch(completePurchase(item));
+        }
+        ,
+        [cancelPurchase.type]: ()=>{
+            dispatch(cancelPurchase());
         }
     }
 }

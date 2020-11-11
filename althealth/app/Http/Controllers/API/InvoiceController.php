@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Client;
 use Carbon\Carbon;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\InvoiceRequest;
 use App\Http\Resources\InvoiceCollection;
 use App\Http\Resources\Invoice as InvoiceResource;
@@ -38,13 +40,18 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //this is buying
-        $invoice = new Invoice();
-        $invoice->fill([
-            'Inv_Date' => Carbon::now()->format('yy-m-d'),
-            'Client_ID' => Client::where('email', Auth::user()->email)->Client_id
-        ]);
-        $invoice->save();
+
+        $date = Carbon::now()->format('yy-m-d');
+        $client_id = Client::where('C_Email', Auth::user()->email)->first()->Client_id;
+        DB::insert('INSERT INTO `altHealth`.`tblInv_Info` (`Inv_Date`, `Inv_Paid`, `Comment`, `Client_id`) VALUES (?, ?, ?, ?)', [$date, '', '', $client_id]);
+        $invoice = Invoice::where([
+            ['Inv_Date', $date,],
+            ['Client_id', $client_id]
+        ])->orderBy('Inv_Num', 'desc')->first();
+        $items = $request->input();
+        foreach ($items as $item) {
+            DB::insert('INSERT INTO `altHealth`.`tblInv_Items` (`Inv_Num`, `Supplement_id`, `Item_price`, `Item_Quantity`) VALUES (?, ?, ?, ?)', [$invoice->Inv_Num, $item['ID'],  $item['Price'], $item['Quantity']]);
+        }
         $invoice->refresh();
         return new InvoiceResource($invoice);
     }

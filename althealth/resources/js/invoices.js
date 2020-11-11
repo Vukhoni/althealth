@@ -69,6 +69,7 @@ const invoicing = createSlice({
         },
         completePurchase : (state, action)=>{
             state.cart = [];
+            state.invoices = [...state.invoices, action.payload];
         },
         cancelPurchase: (state, action)=>{
             state.cart = [];

@@ -1,4 +1,4 @@
-import {loadunpaid,loadinvoices,updateInvoice} from "../invoices";
+import {loadunpaid,loadinvoices,updateInvoice,completePurchase} from "../invoices";
 import {baseUrl} from '../constants'
 import axios from 'axios';
 
@@ -29,6 +29,14 @@ const invoicingApiMiddleware = ({getState, dispatch }) => next => action =>{
             axios.put(`${invoices}/${action.payload.InvoiceNumber}`, action.payload).then((res)=>{
                 const {data} =res.data;
                 next(updateInvoice(data));
+            }).catch((error)=>{
+                alert(`Event failed, reason: ${error}`);
+            });
+            break;
+        case completePurchase.type:
+            axios.post(`${invoices}`, action.payload).then((res)=>{
+                const {data} =res.data;
+                next(completePurchase(data));
             }).catch((error)=>{
                 alert(`Event failed, reason: ${error}`);
             });
