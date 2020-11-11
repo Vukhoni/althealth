@@ -402,7 +402,8 @@ CREATE TABLE `tblInv_Items` (
   `Item_price` decimal(6,2) NOT NULL,
   `Item_Quantity` int NOT NULL,
   PRIMARY KEY (`Inv_Num`,`Supplement_id`),
-  KEY `ordered_supplement` (`Supplement_id`)
+  KEY `ordered_supplement` (`Supplement_id`),
+  CONSTRAINT `iterm_purchased` FOREIGN KEY (`Supplement_id`) REFERENCES `tblSupplements` (`Supplement_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -700,4 +701,4 @@ USE `althealth`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-11 22:20:07
+-- Dump completed on 2020-11-11 22:25:07
