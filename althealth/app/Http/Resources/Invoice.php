@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\InvoiceItemCollection;
 
 class Invoice extends JsonResource
 {
@@ -21,7 +22,7 @@ class Invoice extends JsonResource
             'SettledDate' => $this->Inv_Paid_date,
             'Comment' => $this->Comment,
             'Client' => $this->Client_id,
-            'Items' => new InvoiceItemCollection($this->items),
+            'Items' => InvoiceItemCollection::collection($this->items),
             'ClientDetails' => new Client($this->client),
         ];
     }

@@ -26,7 +26,7 @@ class InvoiceController extends Controller
             return new InvoiceCollection(Invoice::all());
         } else {
 
-            return new InvoiceCollection(Invoice::where('Client_id', Client::where('email', Auth::user()->email)->Client_id));
+            return new InvoiceCollection(Invoice::where('Client_id', Client::where('C_Email', Auth::user()->email)->first()->Client_id)->get());
         }
     }
     public function unpaid()
@@ -37,9 +37,9 @@ class InvoiceController extends Controller
         } else {
 
             return new InvoiceCollection(Invoice::where([
-                ['Client_id', Client::where('email', Auth::user()->email)->Client_id],
+                ['Client_id', Client::where('C_Email', Auth::user()->email)->first()->Client_id],
                 ['Inv_Paid', '<>', 'Y']
-            ]));
+            ])->get());
         }
     }
     /**
