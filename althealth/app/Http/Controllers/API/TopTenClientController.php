@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\TopTenClient;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TopTenClientCollection;
 use Illuminate\Http\Request;
@@ -18,8 +17,7 @@ class TopTenClientController extends Controller
     public function index()
     {
         //
-        $users = DB::select('select CLIENT Client, FREQUENCY Frequency from top_ten_clients');
-        return $users;
+        return new TopTenClientCollection(TopTenClient::all());
     }
 
     /**
