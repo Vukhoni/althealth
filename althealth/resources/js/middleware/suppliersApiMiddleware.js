@@ -44,7 +44,7 @@ const suppliersApiMiddleware = ({getState, dispatch }) => next => action =>{
             break;
         case deleteSupplier.type:
             
-            axios.delete(`${url}/${action.payload.SupplierID}`,action.payload).then((res)=>{
+            axios.delete(`${url}/${action.payload.ID}`,action.payload).then((res)=>{
                 next(deleteSupplier(action.payload));
                 alert(`Successfully removed ${action.payload}`);
             }).catch((error)=>{
