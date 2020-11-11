@@ -49,6 +49,7 @@ Route::post('/register', function (RegisterRequest $request) {
         $client['Reference_ID'] = $validated['ReferenceID'];
         $client->save();
         DB::commit();
+        $user->refresh();
         Auth::login($user);
         $http = new GuzzleHttp\Client;
 

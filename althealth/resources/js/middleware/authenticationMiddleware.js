@@ -25,7 +25,11 @@ const authenticationMiddleware = ({getState, dispatch }) => next => action =>{
         case register.type:
 
                 axios.post(`${baseUrl}/register`,{...action.payload, ID: action.payload.ClientID}).then((res)=>{
-                    next(register(res.data.data));
+                    dispatch(login({
+                        Email: action.payload.Email,
+                        Password: action.payload.Password
+                    }));
+                    
                 }).catch((error)=>{
                     alert(`Event failed, reason: ${error}`);
                 });
