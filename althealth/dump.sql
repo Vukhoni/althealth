@@ -545,7 +545,7 @@ CREATE TABLE `tblSupplier_Info` (
 
 LOCK TABLES `tblSupplier_Info` WRITE;
 /*!40000 ALTER TABLE `tblSupplier_Info` DISABLE KEYS */;
-INSERT INTO `tblSupplier_Info` VALUES ('SUPPLIER A','John Adams','(011)-(863)-(0056)','johnadams@suppliera.co.za','Standard Bank','11813','01887092','Cheque'),('SUPPLIER B','Mary Nkosi','(011)-(894)-(9004)','mary@webmail.com','Standard Bank','23460','420315985','Cheque'),('SUPPLIER C','Ben Brandt','(012)-(456)-(2345)','No e-mail provided','Capitec','470010','4063452826','Cheque'),('SUPPLIER D','Freddy Nell','(081)-(345)-(1268)','No e-mail provided','','','',''),('SUPPLIER E','Lee Singh','(011)-(543)-(1136)','suppliere@absamail.co.za','ABSA','','4063467827','Cheque'),('SUPPLIER F','John or Gert','(012)-(766)-(3333)','johnmalan@mweb.co.za','ABSA','','4028764343','Cheque'),('SUPPLIER G','Matthew Nel','(082)-(820)-(5123)','mmnel@mymail.com','ABSA','','403457878','Credit'),('SUPPLIER H','Frank Moepa','(031)-(089)-(5612)','fmoepa@thismail.co.za','Nedbank','198765','15647878787','Cheque'),('SUPPLIER I','Mary Seopa','(015)-(876)-(1234)','ml@supplieri.co.za','Thyme','678910','5467878781231','Credit');
+INSERT INTO `tblSupplier_Info` VALUES ('SUPPLIER A','John Adams','(011)-(863)-(0056)','johnadams@gmail.com','Standard Bank','11813','01887092','Cheque'),('SUPPLIER B','Mary Nkosi','(011)-(894)-(9004)','mary@webmail.com','Standard Bank','23460','420315985','Cheque'),('SUPPLIER C','Ben Brandt','(012)-(456)-(2345)','No e-mail provided','Capitec','470010','4063452826','Cheque'),('SUPPLIER D','Freddy Nell','(081)-(345)-(1268)','No e-mail provided','','','',''),('SUPPLIER E','Lee Singh','(011)-(543)-(1136)','suppliere@absamail.co.za','ABSA','','4063467827','Cheque'),('SUPPLIER F','John or Gert','(012)-(766)-(3333)','johnmalan@mweb.co.za','ABSA','','4028764343','Cheque'),('SUPPLIER G','Matthew Nel','(082)-(820)-(5123)','mmnel@mymail.com','ABSA','','403457878','Credit'),('SUPPLIER H','Frank Moepa','(031)-(089)-(5612)','fmoepa@thismail.co.za','Nedbank','198765','15647878787','Cheque'),('SUPPLIER I','Mary Seopa','(015)-(876)-(1234)','ml@supplieri.co.za','Thyme','678910','5467878781231','Credit');
 /*!40000 ALTER TABLE `tblSupplier_Info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -732,4 +732,4 @@ USE `althealth`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-12  9:15:07
+-- Dump completed on 2020-11-12  9:20:06
